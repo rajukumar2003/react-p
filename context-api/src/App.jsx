@@ -45,4 +45,8 @@ function Buttons() {
 	</div>
 }
 
+function buttonClicked() {
+	console.log("Button clicked");
+}
+
 export default App
