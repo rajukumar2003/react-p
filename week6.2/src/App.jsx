@@ -1,6 +1,4 @@
-import { useEffect } from 'react'
 import { useState } from 'react'
-import axios from 'axios';
 
 // function App() {
 // 	const [button_no, setButton] = useState(2);
@@ -31,27 +29,20 @@ import axios from 'axios';
 // };
 
 
-function App() {
-	const [counter, setCounter] = useState(0)
-	const [num, setNum] = useState(1)
+
+// ------------------------------------ Sum from 1 to n ----------------------------------------------------------
+// function App() {
+// 	const [num, setNum] = useState(1)
 	
-	let sum = 0;
-	for (let i = 0; i <= num; i++) {
-		sum = sum + i;
-	}
+// 	let sum = 0;
+// 	for (let i = 0; i <= num; i++) {
+// 		sum = sum + i;
+// 	}
 
-	return <div>
-		<input id="number" type="text" onChange={function (e) {
-			setNum(e.target.value);
-			
-
-		}} placeholder='Sum from 1 to n'/>
-		<br />
-		Sum from 1 to {num} is {sum}
-		<br />
-		<button onClick={()=>{ setCounter(counter+1) }}>Counter({counter})</button>
-	</div>
-	
-}
-
-export default App
+// 	return <div>
+// 		<input id="number" type="text" onChange={function(e){ setNum(e.target.value) }} placeholder='Sum from 1 to n'/>
+// 		<br />
+// 		Sum from 1 to {num} is {sum}
+// 	</div>
+// }
+// export default App
