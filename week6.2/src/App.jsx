@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo, useCallback, useEffect } from 'react'
 
 // function App() {
 // 	const [button_no, setButton] = useState(2);
@@ -46,3 +46,72 @@ import { useState } from 'react'
 // 	</div>
 // }
 // export default App
+
+
+//  ------------------------------- Use of Memo ------------------
+// function App() {
+// 	const [count, setCount] = useState(0);
+	
+// 	return <div>
+// 		<ButtonComponent/>
+// 		<button onClick={() => { setCount(count + 1) }}> INcrease <br />{ count }</button>
+// 	</div>
+// }
+
+// const ButtonComponent = memo(() => {
+// 	console.log(' button clicked ');
+// 	return <div>
+// 		<button>Button clicked</button>
+// 	</div>
+// })
+// export default App;
+
+
+
+//  ------------------------------- Use of Callback ------------------
+// function App() {
+// 	const [count, setCount] = useState(0);
+
+// 	const inputFunction = useCallback(() => {
+// 		console.log('hi there');
+// 	}, [])
+
+// 	return <div>
+// 		<ButtonComponent inputFunction={inputFunction} />
+// 		<button onClick={() => { setCount(count + 1) }}> Increase button <br />{count}</button>
+// 	</div>
+// }
+
+// const ButtonComponent = memo((inputFunction) => {
+// 	console.log(' button clicked ');
+// 	return <div>
+// 	</div>
+// })
+// export default App;
+
+
+
+
+// ---------------------------------- Custom hooks ---------------------
+	
+function useTodo() {
+	const [todos, setTodos] = useState[null];
+
+	useEffect(() => {
+		axios.get('')
+			.then((res) => {
+				setTodos(res.data.todo);
+			})
+	}, []);
+	return todos;
+}
+
+
+function App() {
+	const todos = useTodo();
+	return <div>
+		{todos}
+	</div>
+}
+
+export default App;
