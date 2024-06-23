@@ -1,4 +1,4 @@
-import { useState, memo, useCallback, useEffect } from 'react'
+import { useState, memo, useCallback, useEffect, useReducer } from 'react'
 
 // function App() {
 // 	const [button_no, setButton] = useState(2);
@@ -93,25 +93,59 @@ import { useState, memo, useCallback, useEffect } from 'react'
 
 
 // ---------------------------------- Custom hooks ---------------------
-	
-function useTodo() {
-	const [todos, setTodos] = useState[null];
+// function useTodo() {
+// 	const [todos, setTodos] = useState[null];
 
-	useEffect(() => {
-		axios.get('')
-			.then((res) => {
-				setTodos(res.data.todo);
-			})
-	}, []);
-	return todos;
-}
+// 	useEffect(() => {
+// 		axios.get('')
+// 			.then((res) => {
+// 				setTodos(res.data.todo);
+// 			})
+// 	}, []);
+// 	return todos;
+// }
+// // here useTodo is a custom hook.
+// function App() {
+// 	const todos = useTodo();
+// 	return <div>
+// 		{todos}
+// 	</div>
+// }
 
+
+
+
+// ---------------------------------- useReducer ---------------------
+
+const initialState = { count:0 };
+
+function reducer(state, action) {
+	switch (action.type) {
+		case 'increment':
+			return { count: state.count + 1 };
+		case 'decrement':
+			return { count: state.count - 1 };
+		default:
+			throw new Error
+	}
+};
 
 function App() {
-	const todos = useTodo();
-	return <div>
-		{todos}
-	</div>
-}
+	const [state, dispatch] = useReducer(reducer, initialState);
+
+	// const [count, setCount] = useState(0);
+	// const countIncrement = () => {
+	// 	setCount(count + 1)
+	// };
+
+	return <>
+		<h1>Count : {state.count}</h1>
+		<button onClick={()=>dispatch( {type: 'increment'} )}> + </button>
+		<button onClick={() => dispatch({ type: 'decrement' })}> - </button>
+		
+		{/* <h3>Counter using useState: { count}</h3>
+		<button onClick={()=>countIncrement()}>Increase Using useState</button> */}
+	</>
+};
 
 export default App;
