@@ -1,4 +1,4 @@
-import { useState, memo, useCallback, useEffect, useReducer } from 'react'
+import { useState, memo, useCallback, useEffect, useReducer, useTransition } from 'react'
 
 // function App() {
 // 	const [button_no, setButton] = useState(2);
@@ -33,7 +33,7 @@ import { useState, memo, useCallback, useEffect, useReducer } from 'react'
 // ------------------------------------ Sum from 1 to n ----------------------------------------------------------
 // function App() {
 // 	const [num, setNum] = useState(1)
-	
+
 // 	let sum = 0;
 // 	for (let i = 0; i <= num; i++) {
 // 		sum = sum + i;
@@ -51,7 +51,7 @@ import { useState, memo, useCallback, useEffect, useReducer } from 'react'
 //  ------------------------------- Use of Memo ------------------
 // function App() {
 // 	const [count, setCount] = useState(0);
-	
+
 // 	return <div>
 // 		<ButtonComponent/>
 // 		<button onClick={() => { setCount(count + 1) }}> INcrease <br />{ count }</button>
@@ -117,35 +117,73 @@ import { useState, memo, useCallback, useEffect, useReducer } from 'react'
 
 // ---------------------------------- useReducer ---------------------
 
-const initialState = { count:0 };
+// const initialState = { count:0 };
 
-function reducer(state, action) {
-	switch (action.type) {
-		case 'increment':
-			return { count: state.count + 1 };
-		case 'decrement':
-			return { count: state.count - 1 };
-		default:
-			throw new Error
-	}
+// function reducer(state, action) {
+// 	switch (action.type) {
+// 		case 'increment':
+// 			return { count: state.count + 1 };
+// 		case 'decrement':
+// 			return { count: state.count - 1 };
+// 		default:
+// 			throw new Error
+// 	}
+// };
+
+// function App() {
+// 	const [state, dispatch] = useReducer(reducer, initialState);
+
+// 	// const [count, setCount] = useState(0);
+// 	// const countIncrement = () => {
+// 	// 	setCount(count + 1)
+// 	// };
+
+// 	return <>
+// 		<h1>Count : {state.count}</h1>
+// 		<button onClick={()=>dispatch( {type: 'increment'} )}> + </button>
+// 		<button onClick={() => dispatch({ type: 'decrement' })}> - </button>
+
+// 		{/* <h3>Counter using useState: { count}</h3>
+// 		<button onClick={()=>countIncrement()}>Increase Using useState</button> */}
+// 	</>
+// };
+
+
+// ---------------------------------- useTransition ---------------------
+
+
+const List = ({ items }) => {
+	return (
+		<ul>
+			{items.map(item => (
+				<li key={item}>{item}</li>
+			))}
+		</ul>
+	);
 };
 
-function App() {
-	const [state, dispatch] = useReducer(reducer, initialState);
+function App({ initialItems }) {
+	const [input, setInput] = useState('');
+	const [items, setItems] = useState(initialItems);
+	const [isPending, startTransition] = useTransition();
 
-	// const [count, setCount] = useState(0);
-	// const countIncrement = () => {
-	// 	setCount(count + 1)
-	// };
+	const handleChange = (event) => {
+		const value = event.target.value;
+		setInput(value);
+		startTransition(() => {
+			const filteredItems = initialItems.filter(item =>
+				item.toLowerCase().includes(value.toLowerCase())
+			);
+			setItems(filteredItems);
+		});
+	};
 
-	return <>
-		<h1>Count : {state.count}</h1>
-		<button onClick={()=>dispatch( {type: 'increment'} )}> + </button>
-		<button onClick={() => dispatch({ type: 'decrement' })}> - </button>
-		
-		{/* <h3>Counter using useState: { count}</h3>
-		<button onClick={()=>countIncrement()}>Increase Using useState</button> */}
-	</>
-};
+	return (
+		<div>
+			<input type="text" value={input} onChange={handleChange} />
+			{isPending ? <p>Loading...</p> : <List items={items} />}
+		</div>
+	);
+}
 
 export default App;
