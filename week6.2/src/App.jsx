@@ -151,7 +151,6 @@ import { useState, memo, useCallback, useEffect, useReducer, useTransition } fro
 
 // ---------------------------------- useTransition ---------------------
 
-
 const List = ({ items }) => {
 	return (
 		<ul>
@@ -162,10 +161,12 @@ const List = ({ items }) => {
 	);
 };
 
-function App({ initialItems }) {
+function App() {
 	const [input, setInput] = useState('');
-	const [items, setItems] = useState(initialItems);
+	const [items, setItems] = useState([]);
 	const [isPending, startTransition] = useTransition();
+
+	const initialItems = ['Apple', 'Banana', 'Cherry', 'Date', 'Fig', 'Grape', 'Honeydew'];
 
 	const handleChange = (event) => {
 		const value = event.target.value;
